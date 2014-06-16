@@ -1,0 +1,23 @@
+{
+    "name": "vierbergenlars/manipulator-bundle",
+    "require": {
+        "vierbergenlars/xml": "~0.3.0",
+        "symfony/dependency-injection": "~2.1",
+        "symfony/yaml": "~2.1"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lars Vierbergen",
+            "email": "vierbergenlars@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "vierbergenlars\\Bundle\\ManipulatorBundle\\": ""
+        }
+    },
+    "require-dev": {
+        "mikey179/vfsStream": "~1.2"
+    }
+}

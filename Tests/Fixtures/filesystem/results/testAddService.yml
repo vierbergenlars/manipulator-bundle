@@ -1,0 +1,46 @@
+
+services:
+    acme.demo.user.resource_manager.entity_repository:
+        class: AcmeDemoBundle:User
+        public: false
+        tags:
+            - { name: radrest.entity_repository }
+    acme.demo.user.resource_manager:
+        class: Acme\DemoBundle\Entity\UserManager
+        tags:
+            - { name: radrest.resource_manager, resource: user }
+        arguments: ['@fos_user.user_manager', '@acme.demo.user.resource_manager.entity_repository']
+    acme.demo.user.authorization_checker:
+        class: Acme\DemoBundle\Security\UserAuthorizationChecker
+        tags:
+            - { name: radrest.authorization_checker, resource: user }
+    acme.demo.user.form:
+        class: Acme\DemoBundle\Form\UserType
+        tags:
+            - { name: radrest.form, resource: user }
+    acme.demo.note.resource_manager.entity_repository:
+        class: AcmeDemoBundle:Note
+        public: false
+        tags:
+            - { name: radrest.entity_repository }
+    acme.demo.note.resource_manager:
+        class: Acme\DemoBundle\Entity\NoteManager
+        tags:
+            - { name: radrest.resource_manager, resource: note }
+        arguments: ['@acme.demo.note.resource_manager.entity_repository', '@acme.demo.note.authorization_checker']
+    acme.demo.note.authorization_checker:
+        class: Acme\DemoBundle\Security\NoteAuthorizationChecker
+        tags:
+            - { name: radrest.authorization_checker, resource: note }
+    acme.demo.note.form:
+        class: Acme\DemoBundle\Form\NoteType
+        tags:
+            - { name: radrest.form, resource: note }
+    acme.demo.note.controller:
+        class: Acme\DemoBundle\Controller\NoteController
+        tags:
+            - { name: radrest.controller, resource: note }
+    acme.demo.comment.controller:
+        class: Acme\DemoBundle\Controller\CommentController
+        tags:
+            - { name: radrest.controller, resource: comment }

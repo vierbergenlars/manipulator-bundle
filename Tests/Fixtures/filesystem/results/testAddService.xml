@@ -1,0 +1,51 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <!-- User services -->
+        <service id="acme.demo.user.resource_manager.entity_repository" class="AcmeDemoBundle:User" public="false">
+            <tag name="radrest.entity_repository" />
+        </service>
+        
+        <service id="acme.demo.user.resource_manager" class="Acme\DemoBundle\Entity\UserManager">
+            <argument type="service" id="fos_user.user_manager" />
+            <argument type="service" id="acme.demo.user.resource_manager.entity_repository" />
+            <tag name="radrest.resource_manager" resource="user" />
+        </service>
+        
+        <service id="acme.demo.user.authorization_checker" class="Acme\DemoBundle\Security\UserAuthorizationChecker">
+            <tag name="radrest.authorization_checker" resource="user" />
+        </service>
+        
+        <service id="acme.demo.user.form" class="Acme\DemoBundle\Form\UserType">
+            <tag name="radrest.form" resource="user" />
+        </service>
+        
+        <!-- Note services -->
+        <service id="acme.demo.note.resource_manager.entity_repository" class="AcmeDemoBundle:Note" public="false">
+            <tag name="radrest.entity_repository" />
+        </service>
+        <service id="acme.demo.note.resource_manager" class="Acme\DemoBundle\Entity\NoteManager">
+            <argument type="service" id="acme.demo.note.resource_manager.entity_repository" />
+            <argument type="service" id="acme.demo.note.authorization_checker" />
+            <tag name="radrest.resource_manager" resource="note" />
+        </service>
+        <service id="acme.demo.note.authorization_checker" class="Acme\DemoBundle\Security\NoteAuthorizationChecker">
+            <tag name="radrest.authorization_checker" resource="note" />
+        </service>
+        <service id="acme.demo.note.form" class="Acme\DemoBundle\Form\NoteType">
+            <tag name="radrest.form" resource="note" />
+        </service>
+        
+        <service id="acme.demo.note.controller" class="Acme\DemoBundle\Controller\NoteController">
+            <tag name="radrest.controller" resource="note" />
+        </service>
+        
+        <service id="acme.demo.comment.controller" class="Acme\DemoBundle\Controller\CommentController">
+            <tag name="radrest.controller" resource="comment" />
+        </service>
+    </services>
+</container>

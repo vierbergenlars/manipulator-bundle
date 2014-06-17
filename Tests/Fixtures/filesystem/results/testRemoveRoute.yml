@@ -1,0 +1,28 @@
+---
+fos_user_group_new:
+    pattern: /new
+    defaults:
+        _controller: FOSUserBundle:Group:new
+
+fos_user_group_show:
+    pattern: /{groupname}
+    defaults:
+        _controller: FOSUserBundle:Group:new
+    requirements:
+        _method: GET
+
+fos_user_group_edit:
+    pattern: /{groupname}/edit
+    defaults:
+        _controller: FOSUserBundle:Group:edit
+
+fos_user_group_delete:
+    pattern: /{groupname}/delete
+    defaults:
+        _controller: FOSUserBundle:Group:delete
+    requirements:
+        _method: GET
+
+acme_demo_user_controller:
+    resource: acme.demo.user.controller
+    type: rest

@@ -1,5 +1,7 @@
 {
     "name": "vierbergenlars/manipulator-bundle",
+    "description": "A set of classes to make modifying Symfony services and routes easier",
+    "tags": ["symfony", "manipulator", "service", "routing"],
     "require": {
         "vierbergenlars/xml": "~0.3.0",
         "symfony/dependency-injection": "~2.1",

@@ -24,27 +24,25 @@ class RouteElementTest extends \PHPUnit_Framework_TestCase
 
     private function getElement()
     {
-        return new RouteElement('get_users', array('resource'=>'AcmeHelloBundle:User:index'));
+        return new RouteElement('get_users', array('path'=>'/users'));
     }
     public function testElementXml()
     {
         $this->assertEquals('<?xml version="1.0"?>'."\n".
-            '<routes><route id="get_users" resource="AcmeHelloBundle:User:index"/></routes>'."\n", $this->wrap($this->getElement())->__toString());
+            '<routes><route id="get_users" path="/users"/></routes>'."\n", $this->wrap($this->getElement())->__toString());
     }
 
     public function testElementYaml()
     {
         $this->assertSame(array(
-            'resource' => 'AcmeHelloBundle:User:index',
+            'path'=>'/users',
         ), $this->getElement()->toYamlArray());
     }
 
     private function getAllParameters()
     {
         return new RouteElement('get_users', array(
-            'resource'=>'acme.demo.user.controller:index',
-            'type'=>'rest',
-            'prefix'=>'/api',
+            'path'=>'/users',
             'host'=>'api.example.org',
             'schemes'=>'https',
             'methods'=>'HEAD|GET'
@@ -54,15 +52,13 @@ class RouteElementTest extends \PHPUnit_Framework_TestCase
     public function testAllParametersXml()
     {
         $this->assertEquals('<?xml version="1.0"?>'."\n".
-            '<routes><route id="get_users" resource="acme.demo.user.controller:index" type="rest" prefix="/api" host="api.example.org" schemes="https" methods="HEAD|GET"/></routes>'."\n", $this->wrap($this->getAllParameters())->__toString());
+            '<routes><route id="get_users" path="/users" host="api.example.org" schemes="https" methods="HEAD|GET"/></routes>'."\n", $this->wrap($this->getAllParameters())->__toString());
     }
 
     public function testAllParametersYaml()
     {
         $this->assertEquals(array(
-            'resource' => 'acme.demo.user.controller:index',
-            'type' => 'rest',
-            'prefix'=>'/api',
+            'path'=>'/users',
             'host'=>'api.example.org',
             'schemes'=>'https',
             'methods'=>'HEAD|GET',
@@ -71,7 +67,7 @@ class RouteElementTest extends \PHPUnit_Framework_TestCase
 
     private function getOptions()
     {
-        return new RouteElement('get_users', array('resource'=>'acme.demo.user.controller:index'), array(
+        return new RouteElement('get_users', array(), array(
             'defaults'=>array('a'=>'b', 'xxyy'=>'yyzz'),
             'requirements'=>array('_format'=>'html|xml', 'year'=>'\d+'),
             'options'=>array('compiler_class'=>'RouteCompiler'),
@@ -82,7 +78,7 @@ class RouteElementTest extends \PHPUnit_Framework_TestCase
     public function testOptionsXml()
     {
         $this->assertEquals('<?xml version="1.0"?>'."\n".
-            '<routes><route id="get_users" resource="acme.demo.user.controller:index">'.
+            '<routes><route id="get_users">'.
                 '<default key="a">b</default>'.
                 '<default key="xxyy">yyzz</default>'.
                 '<requirement key="_format">html|xml</requirement>'.
@@ -95,7 +91,6 @@ class RouteElementTest extends \PHPUnit_Framework_TestCase
     public function testOptionsYaml()
     {
         $this->assertSame(array(
-            'resource'=>'acme.demo.user.controller:index',
             'defaults'=>array('a'=>'b', 'xxyy'=>'yyzz'),
             'requirements'=>array('_format'=>'html|xml', 'year'=>'\d+'),
             'options'=>array('compiler_class'=>'RouteCompiler'),
